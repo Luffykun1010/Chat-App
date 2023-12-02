@@ -1,0 +1,17 @@
+{% extends "common.html" %}
+{% block content %}
+<div class="row" style="height: 89.5vh;">
+    <div class="col-4 col-md-3" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
+        {% for i in room %}
+        <a href="{% url "room" i.slug %}" class="room-names">
+            <div class="rooms">
+                {{i.name}}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    <div class="col-8 col-md-9">
+        rfgegrt
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,104 @@
+.body{
+    min-height: 100vh;
+}
+.row{
+    width: 100%;
+}
+nav{
+    background-color:#219ebc;
+}
+.head-title{
+    text-decoration: none;
+    color: #edf2f4;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: xx-large;
+}
+.head-title:hover{
+    color: #293241;
+}
+.rooms{
+    background-color: #fefae0;
+    border-radius: 2vh;
+    padding: 3vh 1vh;
+    margin: 3.5vh 1vh;
+
+}
+.room-names{
+    text-decoration: none;
+    font-size: larger;
+    color: #000;
+}
+.chat-border{
+    margin: 2vh;
+    border: 2px #219ebc solid;
+    height: 85vh;
+    border-radius: 1rem;
+}
+.msg{
+    margin-left: 2.5vh;
+    width: 63vw;
+    height: 6vh;
+    border: 0.4vh #264653 solid;
+    border-radius: 2vh;
+    text-align: left;
+    padding-left: 2vh;
+    outline: none;
+    caret-color: #05566a;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+    color: #293241;
+    font-weight: 540;
+}
+.msg:focus{
+    border: 0.4vh #264653 dotted;
+}
+::-webkit-input-placeholder {
+    text-align: left;
+}
+:-moz-placeholder {
+    text-align: center;
+}
+.send{
+    margin-top: -0.3vh;
+    border-radius: 2vh;
+    height: 6.5vh;
+    width: 6.5vh;
+    background-color: #293241;
+    border: none;
+}
+.send svg{
+    margin-top: -0.4vh;
+    color: #ffffff;
+}
+.send:hover{
+    background-color: #3c6e71;
+    border: 0.4vh #293241 dotted;
+}
+.chat-ht{
+    height: 75vh;
+    overflow: auto;
+    margin-bottom: 2vh;
+}
+@media screen and (min-width: 767px) {
+    .msg{
+        width: 59vw;
+    }
+}
+@media screen and (max-width: 600px) {
+    .msg{
+        width: 29vw;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .msg{
+        width: 57vw;
+    }
+}
+@media only screen and (min-width: 1200px){
+    .msg{
+        width: 64vw;
+    }
+}
+#sendForm{
+    margin-bottom: 1vh;
+}

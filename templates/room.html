@@ -1,0 +1,59 @@
+{% extends "common.html" %}
+{% block content %}
+<div class="row" style="height: 89.5vh;">
+    <div class="col-4 col-md-3" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
+        {% for i in room %}
+        <a href="{% url "room" i.slug %}" class="room-names">
+            <div class="rooms">
+                {{i.name}}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    <div class="col-8 col-md-9">
+        <div class="chat-border">
+            <div class="chat-ht">
+                <div id="chat-msg-recieve">
+                    <div class="row">
+                        <div class="col-8 col-md-6">
+                            <div class="card"
+                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:3vh;width: fit-content;">
+                                <div class="card-body" style="padding: 1rem 1rem;">
+                                    gjkrthgir
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="chat-msg">
+                    <div class="row">
+                        <div class="col-4 col-md-6"></div>
+                        <div class="col-8 col-md-6">
+                            <div class="card"
+                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:3vh;width: fit-content;float: right;">
+                                <div class="card-body pull-right" style="padding: 1rem 1rem;">
+                                    dfgertgrthg
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form id="sendForm">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" class="msg" id="input-message" placeholder="Message" id="msg">
+                        <button class="send" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-send" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
