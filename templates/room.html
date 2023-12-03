@@ -12,36 +12,46 @@
     </div>
     <div class="col-8 col-md-9">
         <div class="chat-border">
-            <div class="chat-ht">
+            <div class="chat-ht" id="chat-ht">
                 <div id="chat-msg-recieve">
-                    <div class="row">
-                        <div class="col-8 col-md-6">
-                            <div class="card"
-                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:3vh;width: fit-content;">
-                                <div class="card-body" style="padding: 1rem 1rem;">
-                                    gjkrthgir
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="chat-msg">
+                    {% for i in message %}
+                    {% if i.user.username == request.user.username %}
                     <div class="row">
                         <div class="col-4 col-md-6"></div>
                         <div class="col-8 col-md-6">
                             <div class="card"
-                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:3vh;width: fit-content;float: right;">
-                                <div class="card-body pull-right" style="padding: 1rem 1rem;">
-                                    dfgertgrthg
+                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">
+                                <div class="card-body pull-right" style="padding: 0.2rem 1rem;">
+                                    <p style="font-size: small;">{{i.user.username}}</p>
+                                    <h5 style="margin-top: -1rem;font-size: medium;">{{i.content}}</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-8 col-md-6">
+                            <div class="card"
+                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">
+                                <div class="card-body pull-right" style="padding: 0.2rem 1rem;">
+                                    <p style="font-size: small;">{{i.user.username}}</p>
+                                    <h5 style="margin-top: -1rem;font-size: medium;">{{i.content}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div id="chat-msg">
+                    
                 </div>
             </div>
             <form id="sendForm">
                 <div class="row">
                     <div class="col-12">
+                        <input type="hidden" id="room-name" value="{{rooms.slug}}">
+                        <input type="hidden" id="user-name" value="{{request.user.username}}">
                         <input type="text" class="msg" id="input-message" placeholder="Message" id="msg">
                         <button class="send" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -57,3 +67,58 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+{{rooms.slug|json_script:"json-roomname"}}
+{{request.user.username|json_script:"json-username"}}
+<script>
+    let roomName = JSON.parse(document.getElementById('json-roomname').textContent);
+    let userName = JSON.parse(document.getElementById('json-username').textContent);
+    let input_message = $('#input-message')
+    let msg_body = $('#chat-msg')
+    let sendForm = $('#sendForm')
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/' + roomName
+    );
+    chatSocket.onopen = async function (e) {
+        console.log('open', e)
+        sendForm.on('submit', function (e) {
+            e.preventDefault()
+            let message = input_message.val()
+            let data = {
+                'message': message,
+                'room':roomName,
+                'username':userName
+            }
+            data = JSON.stringify(data)
+            chatSocket.send(data)
+            input_message.val('');
+            return false;
+        })
+    }
+    chatSocket.onmessage = async function (e) {
+        console.log('message', e)
+        const data = JSON.parse(e.data);
+        let message = data['message']
+        if (message) {
+            let msg_element = '<div class="row">'
+                msg_element += '<div class="col-4 col-md-6"></div>'
+                msg_element += '<div class="col-8 col-md-6"><div class="card" style="margin: 2.5vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">'
+                msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;"><p style="font-size: small;">' + data.username +'</p><h5 style="margin-top: -1rem;font-size: medium;">' +  message + '</h5></div>'
+                msg_element += '</div></div></div>'
+            document.querySelector('#chat-msg').innerHTML += msg_element;
+            scrollToBottom();
+        } else {
+            alert('The message is empty');
+        }
+    }
+    chatSocket.onclose = async function (e) {
+        console.log('close', e)
+    }
+    function scrollToBottom(){
+        let objDiv = document.querySelector("#chat-ht");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+    scrollToBottom();
+</script>
+{% endblock scripts %}

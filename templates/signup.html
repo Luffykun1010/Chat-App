@@ -27,7 +27,7 @@
                             href="{% url 'logout' %}">Logout</a>
                     </p>
                     {% else %}
-                    <form action="signup" method="POST"
+                    <form action="" method="POST"
                         style="margin-top: 25px;margin-bottom: 20px;margin-left: 10px;font-family: Verdana, Geneva, Tahoma, sans-serif;">
                         {% csrf_token %}
                         <h4>Create account</h4>
