@@ -1,0 +1,160 @@
+{% extends "common.html" %}
+{% block content %}
+<div class="row" style="height: 89.5vh;">
+    <div class="col-4 col-md-3" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
+        {% for thread in Threads %}
+        {% if thread.first_person.username == request.user.username %}
+        <a href="{% url "room" thread.id %}" class="room-names">
+            <div class="rooms" style="overflow: hidden;">
+                <span>{{ thread.second_person.username }}</span>
+            </div>
+        </a>
+        {% else %}
+        <a href="{% url "room" thread.id %}" class="room-names">
+            <div class="rooms" style="overflow: hidden;">
+                <span>{{ thread.first_person.username }}</span>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="col-8 col-md-9">
+        <div class="chat-border">
+            <div class="chat-ht" id="chat-ht">
+                <div id="chat-msg-recieve">
+                    {% for i in message %}
+                    {% if i.sended_by.username == request.user.username %}
+                    <div class="row">
+                        <div class="col-4 col-md-6"></div>
+                        <div class="col-8 col-md-6">
+                            <div class="card"
+                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">
+                                <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
+                                    <p style="font-size: x-small;">{{i.sended_by.username}}</p>
+                                    <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
+                                    <span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{ i.timestamp|date:"d D" }},<span style="font-size: small;">{{ i.timestamp|time:"H:i" }}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if i.sended_to.username == request.user.username  %}
+                    <div class="row">
+                        <div class="col-8 col-md-6">
+                            <div class="card"
+                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">
+                                <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
+                                    <p style="font-size: x-small;">{{i.sended_by.username}}</p>
+                                    <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
+                                    <span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{ i.timestamp|date:"d D" }},<span style="font-size: small;">{{ i.timestamp|time:"H:i" }}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div id="chat-msg">
+
+                </div>
+            </div>
+            <form id="sendForm">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="hidden" id="room-name" value="{{rooms.slug}}">
+                        <input type="hidden" id="user-name" value="{{request.user.username}}">
+                        <input type="text" class="msg" id="input-message" placeholder="Message" id="msg">
+                        <button class="send" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-send" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+{% for i in Threads %}
+{{i.id|json_script:"json-trid"}}
+{% if i.first_person.username == request.user.username %}
+{{i.second_person.username|json_script:"json-toname"}}
+{{i.second_person.id|json_script:"json-roomname"}}
+{% else %}
+{{i.first_person.username|json_script:"json-toname"}}
+{{i.first_person.id|json_script:"json-roomname"}}
+{% endif %}
+{% endfor %}
+{{request.user.username|json_script:"json-username"}}
+{{request.user.id|json_script:"json-userid"}}
+<script>
+    let threadid = JSON.parse(document.getElementById('json-trid').textContent);
+    let roomName = JSON.parse(document.getElementById('json-roomname').textContent);
+    let ToName = JSON.parse(document.getElementById('json-toname').textContent);
+    let userName = JSON.parse(document.getElementById('json-username').textContent);
+    let userId = JSON.parse(document.getElementById('json-userid').textContent);
+    let input_message = $('#input-message')
+    let msg_body = $('#chat-msg')
+    let sendForm = $('#sendForm')
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/' + roomName
+    );
+    chatSocket.onopen = async function (e) {
+        console.log('open', e)
+        sendForm.on('submit', function (e) {
+            e.preventDefault()
+            let message = input_message.val()
+            let data = {
+                'message': message,
+                'username': userName,
+                'msgto': ToName,
+                'threadid':threadid,
+                'uid' : userId
+            }
+            data = JSON.stringify(data)
+            chatSocket.send(data)
+            input_message.val('');
+            return false;
+        })
+    }
+    chatSocket.onmessage = async function (e) {
+        console.log('message', e)
+        const data = JSON.parse(e.data);
+        let message = data['message']
+        let uname = data['username']
+        if (message) {
+            if (uname == userName) {
+                let msg_element = '<div class="row">'
+                    msg_element += '<div class="col-4 col-md-6"></div>'
+                    msg_element += '<div class="col-8 col-md-6"><div class="card" style="margin: 2.5vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">'
+                    msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;">' + message + '</h5></div>'
+                    msg_element += '</div></div></div>'
+                document.querySelector('#chat-msg').innerHTML += msg_element;
+                scrollToBottom();
+            } else{
+                let msg_element = '<div class="row">'
+                    msg_element += '<div class="col-8 col-md-6"><div class="card"style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">'
+                    msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;">' + message + '</h5></div>'
+                    msg_element += '</div></div></div>'
+                document.querySelector('#chat-msg').innerHTML += msg_element;
+                scrollToBottom();
+            }
+        } else {
+            alert('The message is empty');
+        }
+    }
+    chatSocket.onclose = async function (e) {
+        console.log('close', e)
+    }
+    function scrollToBottom() {
+        let objDiv = document.querySelector("#chat-ht");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+    scrollToBottom();
+</script>
+{% endblock scripts %}
