@@ -132,14 +132,16 @@
                 let msg_element = '<div class="row">'
                     msg_element += '<div class="col-4 col-md-6"></div>'
                     msg_element += '<div class="col-8 col-md-6"><div class="card" style="margin: 2.5vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">'
-                    msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;">' + message + '</h5></div>'
+                    msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
+                    msg_element += '<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
                     msg_element += '</div></div></div>'
                 document.querySelector('#chat-msg').innerHTML += msg_element;
                 scrollToBottom();
             } else{
                 let msg_element = '<div class="row">'
                     msg_element += '<div class="col-8 col-md-6"><div class="card"style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">'
-                    msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;">' + message + '</h5></div>'
+                    msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
+                    msg_element +='<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
                     msg_element += '</div></div></div>'
                 document.querySelector('#chat-msg').innerHTML += msg_element;
                 scrollToBottom();

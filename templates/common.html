@@ -13,10 +13,11 @@
 
 <body class="body">
     <nav>
+        {% if user.is_authenticated %}
         <div class="row">
             <div class="col-1"></div>
             <div class="col-6 col-md-9  mt-3 mb-4">
-                <a href="home" class="head-title">We-Chat</a>
+                <a href="home" class="head-title">NexTalk</a>
             </div>
             <div class="col-2 col-md-1 mt-4 text-center">
                 <a href="logout" class="btn btn-light" style="color:#3d5a80 ;"
@@ -25,6 +26,13 @@
                     </span></a>
             </div>
         </div>
+        {% else %}
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 mt-3 mb-4 text-center">
+                <a href="home" class="head-title">NexTalk</a>
+            </div>
+        {% endif %}
     </nav>
     <section>
         {% block content %}{% endblock content %}
