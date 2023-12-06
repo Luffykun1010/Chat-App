@@ -81,12 +81,15 @@ nav{
 }
 @media screen and (min-width: 767px) {
     .msg{
-        width: 59vw;
+        width: 58vw;
     }
 }
 @media screen and (max-width: 600px) {
+    .vanish{
+        display: none;
+    }
     .msg{
-        width: 29vw;
+        width: 51vw;
     }
 }
 @media only screen and (min-width: 992px) {

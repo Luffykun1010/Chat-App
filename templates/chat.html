@@ -1,7 +1,7 @@
 {% extends "common.html" %}
 {% block content %}
 <div class="row" style="height: 89.5vh;">
-    <div class="col-4 col-md-3" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
+    <div class="col-md-3 vanish" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
         {% for thread in Threads %}
         {% if thread.first_person.username == request.user.username %}
         <a href="{% url "room" thread.id %}" class="room-names">
@@ -18,7 +18,7 @@
         {% endif %}
         {% endfor %}
     </div>
-    <div class="col-8 col-md-9">
+    <div class="col-11 col-md-9">
         <div class="chat-border">
             <div class="chat-ht" id="chat-ht">
                 <div id="chat-msg-recieve">
@@ -54,9 +54,7 @@
                     {% endif %}
                     {% endfor %}
                 </div>
-                <div id="chat-msg">
-
-                </div>
+                <div id="chat-msg"></div>
             </div>
             <form id="sendForm">
                 <div class="row">

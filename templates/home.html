@@ -1,7 +1,7 @@
 {% extends "common.html" %}
 {% block content %}
 <div class="row" style="height: 89.5vh;">
-    <div class="col-4 col-md-3" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
+    <div class="col-12 col-md-3" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
         {% for thread in Threads %}
         {% if thread.first_person.username == request.user.username %}
         <a href="{% url "room" thread.id %}" class="room-names">
