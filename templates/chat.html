@@ -1,8 +1,8 @@
 {% extends "common.html" %}
 {% block content %}
-<div class="row mt-5">
+<div class="row mt-5 mb-1">
     <div class="col-1"></div>
-    <div class="col-3 chat-list">
+    <div class="col-md-3 chat-list vanish">
         <div class="name">
             <div class="row" style="height: 10vh;">
                 <div class="col-9 d-flex" style="margin-top: 4vh;">
@@ -25,15 +25,11 @@
                     {% for thread in Threads %}
                     {% if thread.first_person.username == request.user.username %}
                     <a href="{% url "room" thread.id %}" class="room-names">
-                        <div class="rooms" style="overflow: hidden;">
-                            <span>{{ thread.second_person.username }}</span>
-                        </div>
+                        <h5 class="id-name">9048089432</h5>
                     </a>
                     {% else %}
                     <a href="{% url "room" thread.id %}" class="room-names">
-                        <div class="rooms" style="overflow: hidden;">
-                            <span>{{ thread.first_person.username }}</span>
-                        </div>
+                        <h5 class="id-name">9048089432</h5>
                     </a>
                     {% endif %}
                     {% endfor %}
@@ -41,8 +37,7 @@
             </div>
         </div>
     </div>
-    <div class="col-8 col-md-8">
-        <div class="container">
+    <div class="col-11 col-md-8 col-md-8">
             <div class="head">
                 <div class="row">
                     <div class="col-2 col-lg-1 d-flex justify-content-center">
@@ -65,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="chat-msg">
+            <div class="chat-msg" id="chat-ht">
                 {% for i in message %}
                 {% if i.sended_by.username == request.user.username %}
                 <div class="row">
@@ -77,8 +72,7 @@
                                 <p style="font-size: x-small;">{{i.sended_by.username}}</p>
                                 <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
                                 <span
-                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d
-                                    D" }},<span style="font-size: small;">{{i.timestamp|time:"H:i"}}</span></span>
+                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d D" }},<span style="font-size: small;">{{i.timestamp|time:"H:i"}}</span></span>
                             </div>
                         </div>
                     </div>
@@ -93,8 +87,7 @@
                                 <p style="font-size: x-small;">{{i.sended_by.username}}</p>
                                 <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
                                 <span
-                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d
-                                    D" }},<span style="font-size: small;">{{i.timestamp|time:"H:i"}}</span></span>
+                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d D" }},<span style="font-size: small;">{{i.timestamp|time:"H:i"}}</span></span>
                             </div>
                         </div>
                     </div>
@@ -106,7 +99,7 @@
             <form id="sendForm">
                 <div class="input">
                     <div class="row">
-                        <div class="col-9 col-md-11">
+                        <div class="col-10 col-md-11">
                             <input type="hidden" id="room-name" value="{{rooms.slug}}">
                             <input type="hidden" id="user-name" value="{{request.user.username}}">
                             <input type="text" id="input-message" placeholder="Message">
@@ -123,7 +116,6 @@
                 </div>
             </form>
         </div>
-    </div>
 </div>
 {% endblock content %}
 

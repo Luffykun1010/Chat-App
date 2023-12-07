@@ -1,8 +1,8 @@
 {% extends "common.html" %}
 {% block content %}
-<div class="row mt-5">
+<div class="row mt-5 mb-1">
     <div class="col-1"></div>
-    <div class="col-3 chat-list">
+    <div class="col-11 col-md-3 chat-list">
         <div class="name">
             <div class="row" style="height: 10vh;">
                 <div class="col-9 d-flex" style="margin-top: 4vh;">
@@ -24,13 +24,13 @@
                 <div class="col-12">
                     {% for thread in Threads %}
                     {% if thread.first_person.username == request.user.username %}
-                    <a href="{% url " room" thread.id %}" class="room-names">
+                    <a href="{% url "room" thread.id %}" class="room-names">
                         <div class="rooms" style="overflow: hidden;">
                             <span>{{ thread.second_person.username }}</span>
                         </div>
                     </a>
                     {% else %}
-                    <a href="{% url " room" thread.id %}" class="room-names">
+                    <a href="{% url "room" thread.id %}" class="room-names">
                         <div class="rooms" style="overflow: hidden;">
                             <span>{{ thread.first_person.username }}</span>
                         </div>
@@ -41,5 +41,6 @@
             </div>
         </div>
     </div>
+    <div class="col-md-8 vanish text-white">egdfwfg</div>
 </div>
 {% endblock content %}

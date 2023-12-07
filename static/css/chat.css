@@ -69,6 +69,7 @@
 }
 .head-name{
     color: var(--seccol);
+    margin-top: 1vh;
 }
 .name{
     height: 10vh;
@@ -84,4 +85,9 @@
 .id-name{
     margin: 2vh 0;
     font-family: 'Times New Roman', Times, serif;
+}
+@media screen and (max-width: 600px) {
+    .vanish{
+        display: none;
+    }
 }
