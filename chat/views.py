@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from .models import ChatMessage,Thread
-from django.db.models import Q
+from django.shortcuts import get_object_or_404
 def home(request):
     if request.user.is_authenticated:
         threads=Thread.objects.by_user(user=request.user)
@@ -37,11 +37,14 @@ def loginpage(request):
     return render(request,'login.html')
 def room(request,slug):
     if request.user.is_authenticated:
+        tr=Thread.objects.filter(id=slug)
         threads=Thread.objects.by_user(user=request.user)
-        message = ChatMessage.objects.filter(Q(sended_by=request.user) | Q(sended_to=request.user)).order_by('timestamp')
+        threadid = Thread.objects.filter(id=slug).first()
+        msg=ChatMessage.objects.filter(thread=threadid).order_by('timestamp')
         context = {
             'Threads': threads,
-            'message':message,
+            'msg':msg,
+            'thread':tr
         }
         return render(request,'chat.html',context)
     else:

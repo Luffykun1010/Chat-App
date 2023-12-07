@@ -21,19 +21,21 @@
         </div>
         <div class="chat-id">
             <div class="row">
+                {% for thread in Threads %}
+                {% if thread.first_person.username == request.user.username %}
                 <div class="col-12">
-                    {% for thread in Threads %}
-                    {% if thread.first_person.username == request.user.username %}
                     <a href="{% url "room" thread.id %}" class="room-names">
-                        <h5 class="id-name">9048089432</h5>
+                        <span>{{ thread.second_person.username }}</span>
                     </a>
-                    {% else %}
-                    <a href="{% url "room" thread.id %}" class="room-names">
-                        <h5 class="id-name">9048089432</h5>
-                    </a>
-                    {% endif %}
-                    {% endfor %}
                 </div>
+                {% else %}
+                <div class="col-12">
+                    <a href="{% url "room" thread.id %}" class="room-names">
+                        <span>{{ thread.first_person.username }}</span>
+                    </a>
+                </div>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -41,7 +43,7 @@
             <div class="head">
                 <div class="row">
                     <div class="col-2 col-lg-1 d-flex justify-content-center">
-                        <a href="">
+                        <a href="home">
                             <svg class="back-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                                 <path class="icon-path" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64" />
                                 <path class="icon-path"
@@ -50,7 +52,13 @@
                         </a>
                     </div>
                     <div class="col-8 col-lg-10 d-flex justify-content-center align-items-center">
-                        <h5 class="head-name">9048089432</h5>
+                        {% for i in thread %}
+                        {% if i.second_person.username == request.user.username %}
+                        <h5 class="head-name">{{i.first_person}}</h5>
+                        {% else %}
+                        <h5 class="head-name">{{i.second_person}}</h5>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="col-2 col-lg-1 d-flex justify-content-center">
                         <svg class="back-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -61,13 +69,13 @@
                 </div>
             </div>
             <div class="chat-msg" id="chat-ht">
-                {% for i in message %}
+                {% for i in msg %}
                 {% if i.sended_by.username == request.user.username %}
                 <div class="row">
                     <div class="col-4 col-md-6"></div>
                     <div class="col-8 col-md-6">
                         <div class="card"
-                            style="margin: 2.3vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">
+                            style="margin: 2.3vh 0 0 2vh;border-radius:2vh;width: fit-content;float: right;background: #0d3b66;color: white;">
                             <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
                                 <p style="font-size: x-small;">{{i.sended_by.username}}</p>
                                 <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
@@ -82,7 +90,7 @@
                 <div class="row">
                     <div class="col-8 col-md-6">
                         <div class="card"
-                            style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">
+                            style="margin: 2.3vh 0 0 2vh;border-radius:2vh;width: fit-content;">
                             <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
                                 <p style="font-size: x-small;">{{i.sended_by.username}}</p>
                                 <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
@@ -100,7 +108,6 @@
                 <div class="input">
                     <div class="row">
                         <div class="col-10 col-md-11">
-                            <input type="hidden" id="room-name" value="{{rooms.slug}}">
                             <input type="hidden" id="user-name" value="{{request.user.username}}">
                             <input type="text" id="input-message" placeholder="Message">
                         </div>
@@ -120,7 +127,7 @@
 {% endblock content %}
 
 {% block scripts %}
-{% for i in Threads %}
+{% for i in thread %}
 {{i.id|json_script:"json-trid"}}
 {% if i.first_person.username == request.user.username %}
 {{i.second_person.username|json_script:"json-toname"}}
@@ -171,7 +178,7 @@
             if (uname == userName) {
                 let msg_element = '<div class="row">'
                 msg_element += '<div class="col-4 col-md-6"></div>'
-                msg_element += '<div class="col-8 col-md-6"><div class="card" style="margin: 2.5vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">'
+                msg_element += '<div class="col-8 col-md-6"><div class="card" style="margin: 2.3vh 0 0 2vh;border-radius:2vh;width: fit-content;float: right;background: #0d3b66;color: white;">'
                 msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
                 msg_element += '<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
                 msg_element += '</div></div></div>'
@@ -179,7 +186,7 @@
                 scrollToBottom();
             } else {
                 let msg_element = '<div class="row">'
-                msg_element += '<div class="col-8 col-md-6"><div class="card"style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">'
+                msg_element += '<div class="col-8 col-md-6"><div class="card"style="margin: 2.3vh 0 0 2vh;border-radius:2vh;width: fit-content;">'
                 msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
                 msg_element += '<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
                 msg_element += '</div></div></div>'
