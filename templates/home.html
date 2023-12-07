@@ -1,22 +1,45 @@
 {% extends "common.html" %}
 {% block content %}
-<div class="row" style="height: 89.5vh;">
-    <div class="col-12 col-md-3" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
-        {% for thread in Threads %}
-        {% if thread.first_person.username == request.user.username %}
-        <a href="{% url "room" thread.id %}" class="room-names">
-            <div class="rooms" style="overflow: hidden;">
-                <span>{{ thread.second_person.username }}</span>
+<div class="row mt-5">
+    <div class="col-1"></div>
+    <div class="col-3 chat-list">
+        <div class="name">
+            <div class="row" style="height: 10vh;">
+                <div class="col-9 d-flex" style="margin-top: 4vh;">
+                    <h4>NexTalk</h4>
+                </div>
+                <div class="col-3  d-flex justify-content-center" style="margin-top: 3vh;">
+                    <a href="logout" class="btn btn-light"
+                        style="color:#0d3b66;font-family: Verdana, Geneva, Tahoma, sans-serif;padding-top: 1.2vh;height: 6vh;"
+                        onMouseOver="this.style.background='#0d3b66',this.style.color='white',this.style.border='3px #8ecae6 double'"
+                        onMouseOut="this.style.background='',this.style.color='#0d3b66',this.style.border='none'">
+                        Logout
+                        </span></a>
+                </div>
             </div>
-        </a>
-        {% else %}
-        <a href="{% url "room" thread.id %}" class="room-names">
-            <div class="rooms" style="overflow: hidden;">
-                <span>{{ thread.first_person.username }}</span>
+            <hr>
+        </div>
+        <div class="chat-id">
+            <div class="row">
+                <div class="col-12">
+                    {% for thread in Threads %}
+                    {% if thread.first_person.username == request.user.username %}
+                    <a href="{% url " room" thread.id %}" class="room-names">
+                        <div class="rooms" style="overflow: hidden;">
+                            <span>{{ thread.second_person.username }}</span>
+                        </div>
+                    </a>
+                    {% else %}
+                    <a href="{% url " room" thread.id %}" class="room-names">
+                        <div class="rooms" style="overflow: hidden;">
+                            <span>{{ thread.first_person.username }}</span>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-        </a>
-        {% endif %}
-        {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock content %}

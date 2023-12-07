@@ -1,74 +1,124 @@
 {% extends "common.html" %}
 {% block content %}
-<div class="row" style="height: 89.5vh;">
-    <div class="col-md-3 vanish" style="background-color: #bde0fe;border-right:2px #219ebc solid;">
-        {% for thread in Threads %}
-        {% if thread.first_person.username == request.user.username %}
-        <a href="{% url "room" thread.id %}" class="room-names">
-            <div class="rooms" style="overflow: hidden;">
-                <span>{{ thread.second_person.username }}</span>
+<div class="row mt-5">
+    <div class="col-1"></div>
+    <div class="col-3 chat-list">
+        <div class="name">
+            <div class="row" style="height: 10vh;">
+                <div class="col-9 d-flex" style="margin-top: 4vh;">
+                    <h4>NexTalk</h4>
+                </div>
+                <div class="col-3  d-flex justify-content-center" style="margin-top: 3vh;">
+                    <a href="logout" class="btn btn-light"
+                        style="color:#0d3b66;font-family: Verdana, Geneva, Tahoma, sans-serif;padding-top: 1.2vh;height: 6vh;"
+                        onMouseOver="this.style.background='#0d3b66',this.style.color='white',this.style.border='3px #8ecae6 double'"
+                        onMouseOut="this.style.background='',this.style.color='#0d3b66',this.style.border='none'">
+                        Logout
+                        </span></a>
+                </div>
             </div>
-        </a>
-        {% else %}
-        <a href="{% url "room" thread.id %}" class="room-names">
-            <div class="rooms" style="overflow: hidden;">
-                <span>{{ thread.first_person.username }}</span>
-            </div>
-        </a>
-        {% endif %}
-        {% endfor %}
-    </div>
-    <div class="col-11 col-md-9">
-        <div class="chat-border">
-            <div class="chat-ht" id="chat-ht">
-                <div id="chat-msg-recieve">
-                    {% for i in message %}
-                    {% if i.sended_by.username == request.user.username %}
-                    <div class="row">
-                        <div class="col-4 col-md-6"></div>
-                        <div class="col-8 col-md-6">
-                            <div class="card"
-                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">
-                                <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
-                                    <p style="font-size: x-small;">{{i.sended_by.username}}</p>
-                                    <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
-                                    <span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{ i.timestamp|date:"d D" }},<span style="font-size: small;">{{ i.timestamp|time:"H:i" }}</span></span>
-                                </div>
-                            </div>
+            <hr>
+        </div>
+        <div class="chat-id">
+            <div class="row">
+                <div class="col-12">
+                    {% for thread in Threads %}
+                    {% if thread.first_person.username == request.user.username %}
+                    <a href="{% url "room" thread.id %}" class="room-names">
+                        <div class="rooms" style="overflow: hidden;">
+                            <span>{{ thread.second_person.username }}</span>
                         </div>
-                    </div>
-                    {% endif %}
-                    {% if i.sended_to.username == request.user.username  %}
-                    <div class="row">
-                        <div class="col-8 col-md-6">
-                            <div class="card"
-                                style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">
-                                <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
-                                    <p style="font-size: x-small;">{{i.sended_by.username}}</p>
-                                    <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
-                                    <span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{ i.timestamp|date:"d D" }},<span style="font-size: small;">{{ i.timestamp|time:"H:i" }}</span></span>
-                                </div>
-                            </div>
+                    </a>
+                    {% else %}
+                    <a href="{% url "room" thread.id %}" class="room-names">
+                        <div class="rooms" style="overflow: hidden;">
+                            <span>{{ thread.first_person.username }}</span>
                         </div>
-                    </div>
+                    </a>
                     {% endif %}
                     {% endfor %}
                 </div>
-                <div id="chat-msg"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-8 col-md-8">
+        <div class="container">
+            <div class="head">
+                <div class="row">
+                    <div class="col-2 col-lg-1 d-flex justify-content-center">
+                        <a href="">
+                            <svg class="back-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                                <path class="icon-path" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64" />
+                                <path class="icon-path"
+                                    d="m237.248 512l265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="col-8 col-lg-10 d-flex justify-content-center align-items-center">
+                        <h5 class="head-name">9048089432</h5>
+                    </div>
+                    <div class="col-2 col-lg-1 d-flex justify-content-center">
+                        <svg class="back-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10.001 7.8a2.2 2.2 0 1 0 0 4.402A2.2 2.2 0 0 0 10 7.8zm0-2.6A2.2 2.2 0 1 0 9.999.8a2.2 2.2 0 0 0 .002 4.4zm0 9.6a2.2 2.2 0 1 0 0 4.402a2.2 2.2 0 0 0 0-4.402z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-msg">
+                {% for i in message %}
+                {% if i.sended_by.username == request.user.username %}
+                <div class="row">
+                    <div class="col-4 col-md-6"></div>
+                    <div class="col-8 col-md-6">
+                        <div class="card"
+                            style="margin: 2.3vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">
+                            <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
+                                <p style="font-size: x-small;">{{i.sended_by.username}}</p>
+                                <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
+                                <span
+                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d
+                                    D" }},<span style="font-size: small;">{{i.timestamp|time:"H:i"}}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if i.sended_to.username == request.user.username %}
+                <div class="row">
+                    <div class="col-8 col-md-6">
+                        <div class="card"
+                            style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">
+                            <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
+                                <p style="font-size: x-small;">{{i.sended_by.username}}</p>
+                                <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
+                                <span
+                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d
+                                    D" }},<span style="font-size: small;">{{i.timestamp|time:"H:i"}}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div id="chat-msg" style="margin-bottom: 1.5vh;"></div>
             </div>
             <form id="sendForm">
-                <div class="row">
-                    <div class="col-12">
-                        <input type="hidden" id="room-name" value="{{rooms.slug}}">
-                        <input type="hidden" id="user-name" value="{{request.user.username}}">
-                        <input type="text" class="msg" id="input-message" placeholder="Message" id="msg">
-                        <button class="send" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-send" viewBox="0 0 16 16">
-                                <path
-                                    d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
-                            </svg>
-                        </button>
+                <div class="input">
+                    <div class="row">
+                        <div class="col-9 col-md-11">
+                            <input type="hidden" id="room-name" value="{{rooms.slug}}">
+                            <input type="hidden" id="user-name" value="{{request.user.username}}">
+                            <input type="text" id="input-message" placeholder="Message">
+                        </div>
+                        <div class="col-1 d-flex justify-content-center">
+                            <button class="send-button" type="submit">
+                                <svg class="send-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                    <path class="icon-path"
+                                        d="m27.45 15.11l-22-11a1 1 0 0 0-1.08.12a1 1 0 0 0-.33 1L6.69 15H18v2H6.69L4 26.74A1 1 0 0 0 5 28a1 1 0 0 0 .45-.11l22-11a1 1 0 0 0 0-1.78Z" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -111,8 +161,8 @@
                 'message': message,
                 'username': userName,
                 'msgto': ToName,
-                'threadid':threadid,
-                'uid' : userId
+                'threadid': threadid,
+                'uid': userId
             }
             data = JSON.stringify(data)
             chatSocket.send(data)
@@ -128,19 +178,19 @@
         if (message) {
             if (uname == userName) {
                 let msg_element = '<div class="row">'
-                    msg_element += '<div class="col-4 col-md-6"></div>'
-                    msg_element += '<div class="col-8 col-md-6"><div class="card" style="margin: 2.5vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">'
-                    msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
-                    msg_element += '<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
-                    msg_element += '</div></div></div>'
+                msg_element += '<div class="col-4 col-md-6"></div>'
+                msg_element += '<div class="col-8 col-md-6"><div class="card" style="margin: 2.5vh 0 0 2vh;border: 0.5vh #055f6d solid;border-radius:2vh;width: fit-content;float: right;">'
+                msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
+                msg_element += '<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
+                msg_element += '</div></div></div>'
                 document.querySelector('#chat-msg').innerHTML += msg_element;
                 scrollToBottom();
-            } else{
+            } else {
                 let msg_element = '<div class="row">'
-                    msg_element += '<div class="col-8 col-md-6"><div class="card"style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">'
-                    msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
-                    msg_element +='<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
-                    msg_element += '</div></div></div>'
+                msg_element += '<div class="col-8 col-md-6"><div class="card"style="margin: 2.3vh 0 0 2vh;border: 0.5vh #ff0054 solid;border-radius:2vh;width: fit-content;">'
+                msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
+                msg_element += '<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
+                msg_element += '</div></div></div>'
                 document.querySelector('#chat-msg').innerHTML += msg_element;
                 scrollToBottom();
             }
