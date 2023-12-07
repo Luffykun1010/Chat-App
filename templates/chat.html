@@ -24,14 +24,15 @@
                 {% for thread in Threads %}
                 {% if thread.first_person.username == request.user.username %}
                 <div class="col-12">
+                    
                     <a href="{% url "room" thread.id %}" class="room-names">
-                        <span>{{ thread.second_person.username }}</span>
+                        <div class="chat-names"><span>{{ thread.second_person.username }}</span></div>
                     </a>
                 </div>
                 {% else %}
                 <div class="col-12">
                     <a href="{% url "room" thread.id %}" class="room-names">
-                        <span>{{ thread.first_person.username }}</span>
+                        <div class="chat-names"><span>{{ thread.first_person.username }}</span></div>
                     </a>
                 </div>
                 {% endif %}
@@ -39,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div class="col-11 col-md-8 col-md-8">
+    <div class="col-11 col-md-7">
             <div class="head">
                 <div class="row">
                     <div class="col-2 col-lg-1 d-flex justify-content-center">

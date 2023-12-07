@@ -25,17 +25,13 @@
                 {% if thread.first_person.username == request.user.username %}
                 <div class="col-12">
                     <a href="{% url "room" thread.id %}" class="room-names">
-                        <div class="rooms" style="overflow: hidden;">
-                            <span>{{ thread.second_person.username }}</span>
-                        </div>
+                        <div class="chat-names"><span>{{ thread.second_person.username }}</span></div>
                     </a>
                 </div>
                 {% else %}
                 <div class="col-12">
                     <a href="{% url "room" thread.id %}" class="room-names">
-                        <div class="rooms" style="overflow: hidden;">
-                            <span>{{ thread.first_person.username }}</span>
-                        </div>
+                        <div class="chat-names"><span>{{ thread.first_person.username }}</span></div>
                     </a>
                 </div>
                 {% endif %}
