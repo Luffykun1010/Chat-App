@@ -77,10 +77,9 @@
                         <div class="card"
                             style="margin: 2.3vh 0 0 2vh;border-radius:2vh;width: fit-content;float: right;background: #0d3b66;color: white;">
                             <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
-                                <p style="font-size: x-small;">{{i.sended_by.username}}</p>
-                                <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
+                                <h5 style="margin-top: 0.5rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
                                 <span
-                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d D" }},<span style="font-size: small;">{{i.timestamp|time:"H:i"}}</span></span>
+                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d D" }},{{i.timestamp|time:"H:i"}}</span>
                             </div>
                         </div>
                     </div>
@@ -92,10 +91,9 @@
                         <div class="card"
                             style="margin: 2.3vh 0 0 2vh;border-radius:2vh;width: fit-content;">
                             <div class="card-body" style="padding: 0.2rem 1rem 0 1rem ;height: fit-content;">
-                                <p style="font-size: x-small;">{{i.sended_by.username}}</p>
-                                <h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
+                                <h5 style="margin-top: 0.5rem;font-size: medium;margin-bottom: 0;">{{i.message}}</h5>
                                 <span
-                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d D" }},<span style="font-size: small;">{{i.timestamp|time:"H:i"}}</span></span>
+                                    style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">{{i.timestamp|date:"d D" }},{{i.timestamp|time:"H:i"}}</span>
                             </div>
                         </div>
                     </div>
@@ -179,7 +177,7 @@
                 let msg_element = '<div class="row">'
                 msg_element += '<div class="col-4 col-md-6"></div>'
                 msg_element += '<div class="col-8 col-md-6"><div class="card" style="margin: 2.3vh 0 0 2vh;border-radius:2vh;width: fit-content;float: right;background: #0d3b66;color: white;">'
-                msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
+                msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><h5 style="margin-top: 0.5rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
                 msg_element += '<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
                 msg_element += '</div></div></div>'
                 document.querySelector('#chat-msg').innerHTML += msg_element;
@@ -187,7 +185,7 @@
             } else {
                 let msg_element = '<div class="row">'
                 msg_element += '<div class="col-8 col-md-6"><div class="card"style="margin: 2.3vh 0 0 2vh;border-radius:2vh;width: fit-content;">'
-                msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><p style="font-size: small;">' + data.username + '</p><h5 style="margin-top: -1rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
+                msg_element += '<div class="card-body" style="padding: 0.2rem 1rem;height: fit-content;"><h5 style="margin-top: 0.5rem;font-size: medium;margin-bottom: 0;">' + message + '</h5>'
                 msg_element += '<span style="font-size: xx-small;padding-top: -1rem;margin-top: -1rem;">Just now</div>'
                 msg_element += '</div></div></div>'
                 document.querySelector('#chat-msg').innerHTML += msg_element;

@@ -30,7 +30,7 @@
     height: 67vh;
     overflow: auto;
     margin-bottom: 2.5vh;
-    background: radial-gradient(rgb(255 243 243 / 10%), rgb(6 4 4 / 50%)), url('/static/images/bg.jpg');
+    background: radial-gradient(rgb(255 243 243 / 40%), rgb(6 4 4 / 50%)), url('/static/images/bg.jpg');
     
 }
 .input{
