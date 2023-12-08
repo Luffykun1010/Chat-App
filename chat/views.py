@@ -44,7 +44,8 @@ def room(request,slug):
         context = {
             'Threads': threads,
             'msg':msg,
-            'thread':tr
+            'thread':tr,
+            'tr':tr
         }
         return render(request,'chat.html',context)
     else:

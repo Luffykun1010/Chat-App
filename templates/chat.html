@@ -20,24 +20,31 @@
             <hr>
         </div>
         <div class="chat-id">
-            <div class="row">
-                {% for thread in Threads %}
-                {% if thread.first_person.username == request.user.username %}
-                <div class="col-12">
-                    
-                    <a href="{% url "room" thread.id %}" class="room-names">
-                        <div class="chat-names"><span>{{ thread.second_person.username }}</span></div>
-                    </a>
-                </div>
-                {% else %}
-                <div class="col-12">
-                    <a href="{% url "room" thread.id %}" class="room-names">
-                        <div class="chat-names"><span>{{ thread.first_person.username }}</span></div>
-                    </a>
-                </div>
-                {% endif %}
-                {% endfor %}
-            </div>
+            {% for i in tr %}
+            {% for thread in Threads %}
+            {% if i.id == thread.id %}
+            {% if thread.first_person.username == request.user.username %}
+            <a href="{% url "room" thread.id %}" class="room-names">
+                <div class="chat-names active"><span>{{ thread.second_person.username }}</span></div>
+            </a>
+            {% else %}
+            <a href="{% url "room" thread.id %}" class="room-names">
+                <div class="chat-names active"><span>{{ thread.first_person.username }}</span></div>
+            </a> 
+            {% endif %}
+            {% else %}
+            {% if thread.first_person.username == request.user.username %}
+            <a href="{% url "room" thread.id %}" class="room-names">
+                <div class="chat-names"><span>{{ thread.second_person.username }}</span></div>
+            </a>
+            {% else %}
+            <a href="{% url "room" thread.id %}" class="room-names">
+                <div class="chat-names"><span>{{ thread.first_person.username }}</span></div>
+            </a> 
+            {% endif %}
+            {% endif %}
+            {% endfor %}  
+            {% endfor %}
         </div>
     </div>
     <div class="col-11 col-md-7">

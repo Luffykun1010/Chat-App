@@ -20,25 +20,23 @@
             <hr>
         </div>
         <div class="chat-id">
-            <div class="row">
-                {% for thread in Threads %}
-                {% if thread.first_person.username == request.user.username %}
-                <div class="col-12">
-                    <a href="{% url "room" thread.id %}" class="room-names">
-                        <div class="chat-names"><span>{{ thread.second_person.username }}</span></div>
-                    </a>
-                </div>
-                {% else %}
-                <div class="col-12">
-                    <a href="{% url "room" thread.id %}" class="room-names">
-                        <div class="chat-names"><span>{{ thread.first_person.username }}</span></div>
-                    </a>
-                </div>
-                {% endif %}
-                {% endfor %}
-            </div>
+            {% for thread in Threads %}
+            {% if thread.first_person.username == request.user.username %}
+            <a href="{% url "room" thread.id %}" class="room-names">
+                <div class="chat-names"><span>{{ thread.second_person.username }}</span></div>
+            </a>
+            {% else %}
+            <a href="{% url "room" thread.id %}" class="room-names">
+                <div class="chat-names"><span>{{ thread.first_person.username }}</span></div>
+            </a>    
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
-    <div class="col-md-8 vanish text-white">egdfwfg</div>
+    <div class="col-md-8 vanish">
+        <div class="home-tag d-flex justify-content-center align-items-center">
+            <h5 class="home-text">Click on the chat to load chats.....</h5>
+        </div>
+    </div>
 </div>
 {% endblock content %}

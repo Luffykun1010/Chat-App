@@ -3,6 +3,7 @@
     --bg:#fff;
     --text:#000;
     --seccol: #0d3b66;
+    --light: #ade8f4;
 }
 .body{
     height: 100%;
@@ -97,6 +98,7 @@
     height: 10.5vh;
     border-radius: 3vh;
     padding:3vh 0 0 2.5vh;
+    margin-top: 0.5vh;
 }
 .room-names{
     text-decoration: none;
@@ -106,6 +108,19 @@
     font-size: larger;
 }
 .chat-names:hover{
+    background: var(--light);
+    color: var(--seccol);
+}
+.home-tag{
+    background: radial-gradient(rgb(255 243 243 / 10%), rgb(6 4 4 / 50%)), url('/static/images/bg.jpg');
+    height: 89vh;
+    border-radius: 5vh;
+}
+.home-text{
+    color: var(--seccol);
+    opacity: 0.7;
+}
+.active{
     background: var(--seccol);
     color: var(--bg);
 }
