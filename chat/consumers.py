@@ -64,4 +64,5 @@ class ChatConsumer(AsyncConsumer):
         thread=Thread.objects.get(id=threadid)
         user=User.objects.get(username=user)
         recieved=User.objects.get(username=msgto)
-        ChatMessage.objects.create(sended_by=user,sended_to=recieved,thread=thread,message=msg)
+        if msg is not None:
+            ChatMessage.objects.create(sended_by=user,sended_to=recieved,thread=thread,message=msg)

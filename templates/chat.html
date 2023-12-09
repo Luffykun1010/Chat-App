@@ -161,18 +161,22 @@
         console.log('open', e)
         sendForm.on('submit', function (e) {
             e.preventDefault()
-            let message = input_message.val()
-            let data = {
-                'message': message,
-                'username': userName,
-                'msgto': ToName,
-                'threadid': threadid,
-                'uid': userId
+            let msg = input_message.val().trim()
+            if (msg === '') {
+                alert('The message is empty');
+            }else{
+                let data = {
+                    'message': msg,
+                    'username': userName,
+                    'msgto': ToName,
+                    'threadid': threadid,
+                    'uid': userId
+                }
+                data = JSON.stringify(data)
+                chatSocket.send(data)
+                input_message.val('');
+                return false;
             }
-            data = JSON.stringify(data)
-            chatSocket.send(data)
-            input_message.val('');
-            return false;
         })
     }
     chatSocket.onmessage = async function (e) {
