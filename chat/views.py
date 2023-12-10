@@ -35,6 +35,9 @@ def loginpage(request):
             messages.error(request,"Invalid credentials")
             return redirect('login')
     return render(request,'login.html')
+def logoutpage(request):
+    logout(request)
+    return redirect('login')
 def room(request,slug):
     if request.user.is_authenticated:
         tr=Thread.objects.filter(id=slug)

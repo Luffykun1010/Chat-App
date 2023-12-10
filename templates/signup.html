@@ -1,12 +1,12 @@
 {% extends "common.html" %}
 {% load static %}
 {% block content %}
-<div class="row" style="width: 100%;margin-bottom: 130px;">
+<div class="row" style="width: 100%;min-height: 100vh;">
     <div class="col-1 col-md-2 col-lg-4"></div>
-    <div class="col-lg-4 col-11 col-md-8">
-        <div class="container"
-            style="margin-top: 30px;width: 100%;border-style:dashed;border-color:rgb(199, 115, 115);border-radius: 15px;">
-            {% if user.is_authenticated %}
+    <div class="col-lg-4 col-11 col-md-8 d-flex justify-content-center align-items-center">
+        <div class="lo-list ">
+            <div class="container" style="margin-top: 40px;width: 100%;">
+                {% if user.is_authenticated %}
             <h3 style="text-align: center; margin-top: 90px;">Already logged in!!</h3>
             <p style="margin-top:100px; font-size: medium;text-align: center;">Back to <a href="{% url 'home' %}">
                     Home Page</a>
@@ -19,7 +19,7 @@
                 style="margin-top: 25px;margin-bottom: 20px;margin-left: 10px;font-family: Verdana, Geneva, Tahoma, sans-serif;">
                 {% csrf_token %}
                 <h4>Create account</h4>
-                <div class="d-flex" style="margin-top: 10px;flex-direction: column;margin-right: 10px;">
+                <div class="lo-input d-flex">
                     <label for="" style="margin-top: 25px;font-weight: 500; ">Mobile Number</label>
                     <input type="tel" style="margin-top: 8px; " pattern="[0-9]{3}[0-9]{4}[0-9]{3}" id="phone"
                         name="phone" placeholder="Enter your Mobile number" required>
@@ -29,12 +29,13 @@
                         maxlength="10" placeholder="Enter Password " required>
                     <p style="font-size: small;color: rgb(1, 1, 1);">!! Should contain 6-10 numericals/letters</p>
                     <button type="submit"
-                        style=" margin-top: 15px;font-weight: 500; background-color: yellow;border-style: hidden;height: 50px;width: 100%;">Signup</button>
+                    style="margin-top: 30px;font-weight: 500; background-color: yellow;border-style: hidden;height: 50px;border-radius: 1vh;">Signup</button>
                     <p style="margin-top: 10px; font-size: medium;text-align: center;margin-bottom: 20px;">Already a
                         user? <a href="{% url 'login' %}">Login</a></p>
                 </div>
             </form>
             {% endif %}
+            </div>
         </div>
     </div>
 </div>
